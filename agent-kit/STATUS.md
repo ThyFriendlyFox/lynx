@@ -24,8 +24,8 @@ States: ✅ done (gated) · 🚧 in progress · ❌ not started · 🧊 frozen/w
 
 ## Current week
 
-- **Shipping:** "Talk to the folder" on `feat/chat`. The next item is "Connect when the network is hard".
-- **Last release:** none yet. v0.1.0 is ready to tag.
+- **Shipping:** between cycles. The next item is "Connect when the network is hard".
+- **Last release:** v0.2.0 — 2026-09-16. Tagged locally; the repository has no remote yet.
 - **Known red:** none. The untested paths are Windows, Linux, the connection
   between 2 networks and the Claude chat provider; they are marked 🚧 above,
   not ✅.
