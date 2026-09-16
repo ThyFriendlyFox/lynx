@@ -1,0 +1,16 @@
+# build output
+/dist/
+/lynx
+/lynx.exe
+
+# loop state — runtime only, never history
+.claude/ralph-loop.local.md
+.claude/*.local.md
+
+# local test folders
+/tmp/
+/.scratch/
+
+# OS
+.DS_Store
+Thumbs.db
