@@ -16,19 +16,7 @@ in a folder.
 
 ## Feature Queue — ordered; top unblocked item ships next
 
-### 1. Talk to the folder
-- **Promise:** In a shared folder, `lynx chat` answers a question about the
-  files and the answer names at least one real file from that folder.
-- **Evidence:** A gate runs `lynx chat --once "what is in this folder?"`
-  against a recorded provider and asserts the answer names a seeded file. A
-  transcript of one real session goes in the PR.
-- **Use case:** docs/USE-CASES.md, "Ask a question about the folder".
-- **Scope guard:** No code edits by the model. No agent tools. No chat
-  between peers. One provider (Anthropic) behind a provider seam, and the
-  chat stays off when no API key exists.
-- **Status:** ready
-
-### 2. Connect when the network is hard
+### 1. Connect when the network is hard
 - **Promise:** Two computers on different networks, both behind a NAT that
   blocks direct connections, sync a file in under 60 seconds.
 - **Evidence:** A run on 2 real machines on 2 networks, with the log lines
@@ -39,7 +27,7 @@ in a folder.
   relay server of its own in this item.
 - **Status:** ready — needs a human with a second machine for the evidence.
 
-### 3. Install without a terminal
+### 2. Install without a terminal
 - **Promise:** A person installs Lynx on macOS, Windows or Linux with one
   download, and the right click menu works without a terminal command.
 - **Evidence:** Release artifacts for 5 platforms with checksums, and a
@@ -49,7 +37,7 @@ in a folder.
   item; document the warning each system shows instead.
 - **Status:** ready
 
-### 4. Read the folder with git
+### 3. Read the folder with git
 - **Promise:** `lynx github link <repo>` pushes the current folder to a
   branch, and every later change lands as a commit on that branch within 60
   seconds.
@@ -59,6 +47,16 @@ in a folder.
 - **Scope guard:** One direction only: folder to git. No pull, no merge, no
   branch selection UI.
 - **Status:** ready
+
+### 4. Prove the Claude chat against the real API
+- **Promise:** `lynx chat` answers a question with the Claude provider and
+  the answer names a real file from the folder.
+- **Evidence:** A transcript of one session with the real API in the PR, and
+  a second gate case that runs when `ANTHROPIC_API_KEY` exists and skips
+  loudly when it does not.
+- **Use case:** docs/USE-CASES.md, "Ask a question about the folder".
+- **Scope guard:** No new provider. No tools for the model.
+- **Status:** ready — needs a human with an API key.
 
 ## Later — candidates, not yet specced
 
@@ -76,6 +74,7 @@ in a folder.
 
 | Week | Feature | Release | Evidence |
 |---|---|---|---|
+| 2026-09-16 | Talk to the folder | v0.2.0 | `verify/chat-gate.sh` green: `lynx chat "how much is the hotel?"` names `notes/budget.md`, and an unanswerable question returns "No file". |
 | 2026-09-15 | Live shared folders, share codes, right click menu | v0.1.0 | Two folders synced a file in 1 second; `./verify/verify.sh` green; macOS Quick Action registered and run. |
 
 ## Explicitly not doing
@@ -90,6 +89,10 @@ in a folder.
 
 ## Queue changes
 
+- 2026-09-16: Shipped "Talk to the folder". The item promised a `--once`
+  flag; the command takes the question as plain words instead, because one
+  way to ask is enough. The gate runs the local provider, so it needs no key
+  and no network. The unproven Claude path became new item 4.
 - 2026-09-15: Seeded the queue after the first build. The human ranked chat
   first, network hardening second. Mark: provisional order, the human
   re-orders at any time.

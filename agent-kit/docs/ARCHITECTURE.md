@@ -1,7 +1,7 @@
 # Architecture
 
 Lynx is a command line program in Go. It runs on macOS, Windows and Linux.
-The code has 10 parts.
+The code has 12 parts.
 
 | Part | Folder | Task |
 |---|---|---|
@@ -15,6 +15,7 @@ The code has 10 parts.
 | Protocol | `internal/proto` | The messages and the greeting between two peers. |
 | Network | `internal/p2p` | Finds the peers and moves the bytes. |
 | Daemon | `internal/daemon` | Runs the folder in the background and publishes its state. |
+| Chat | `internal/chat` | Describes the folder to a model and answers questions about it. |
 | Menu | `internal/shell` | Adds "Share with Lynx" to the right click menu. |
 
 ## Data flow
@@ -55,3 +56,5 @@ an HMAC challenge. A peer that fails the challenge gets no data.
 | `engine` ↔ `.lynx/` | The engine never syncs `.lynx/`. A path from a peer that points at `.lynx/` or outside the folder is refused. |
 | `cli` ↔ `daemon` | The command line reads `.lynx/daemon.json`. It never reaches into the running process. |
 | `shell` ↔ `cli` | The right click menu calls `lynx menu share <folder>`. It holds no sync logic. |
+| `chat` ↔ disk | The chat reads files. It never writes one, and it never sends a file that is not text or that `.lynxignore` hides. |
+| `chat` ↔ the folder key | The chat settings and the API key live outside every shared folder. |

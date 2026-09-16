@@ -29,6 +29,9 @@ done
 step "test"
 go test ./... || fail=1
 
+step "chat gate"
+./verify/chat-gate.sh || fail=1
+
 if [ "$fail" -ne 0 ]; then
   printf '\nverify: FAILED\n'
   exit 1

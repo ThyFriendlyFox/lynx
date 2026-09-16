@@ -60,5 +60,6 @@ folder syncs.
 
 **Share.** A person shares a folder that holds many documents.
 **Join.** The person runs `lynx chat` in the folder.
-**Result.** The person asks what is in the folder and gets an answer about
-these files. This case is on the roadmap and does not work yet.
+**Result.** The person asks what is in the folder and gets an answer that
+names the files it used. With no API key the answer comes from a word search
+over the same files.

@@ -76,3 +76,36 @@ no second machine ran them. STATUS.md marks those rows 🚧, not ✅.
 
 Evidence: `./verify/verify.sh` green — format, vet, build, 5 cross builds,
 4 test packages.
+
+## 2026-09-16 — The folder answers questions
+
+This week I shipped roadmap item 1: talk to the folder. `lynx chat` in a
+shared folder answers a question about the files in it.
+
+The chat builds a description of the folder: every file name with its size,
+then the text of the files, newest first, up to 200 KB. It sends the
+description with the question and writes the answer.
+
+There are 2 providers. The `anthropic` provider streams an answer from
+Claude. The `local` provider answers with a word search over the same
+description and needs no key, no account and no network. The provider is the
+second seam in the project, next to discovery.
+
+The `local` provider started as a way to test the chat without a key. It
+turned into a feature. A person with no API key runs `lynx chat "where is the
+budget"` and gets the file and the matching lines. The gate uses it too, so
+the health check runs offline and proves the real thing: the folder reaches
+the provider and the answer names real files.
+
+I did not prove the Claude path. This computer holds no API key, so no
+request left it. The code compiles, streams, marks the folder description for
+caching, and falls back to a second model when the first one declines. None
+of that is proven until a person with a key runs it. STATUS.md marks that row
+🚧 and the roadmap holds it as item 4.
+
+One thing I changed from the plan: the item promised a `--once` flag. The
+command takes the question as plain words instead, because one way to ask is
+enough. ROADMAP.md records the change.
+
+Evidence: `./verify/verify.sh` green, including the new `verify/chat-gate.sh`
+with 4 cases.

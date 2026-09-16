@@ -35,6 +35,28 @@ data. Restart the folder after an edit: `lynx stop` then `lynx start`.
 | `lynx.log` | What happened in this folder. |
 | `trash/` | Files that Lynx replaced or deleted. Nothing is lost. |
 
+## Chat settings
+
+The chat settings live outside every shared folder, because a shared folder
+travels to other people. An API key never enters a shared folder.
+
+| Platform | Path |
+|---|---|
+| macOS | `~/Library/Application Support/lynx/config.json` |
+| Windows | `%AppData%\lynx\config.json` |
+| Linux | `~/.config/lynx/config.json` |
+
+| Field | Type | Default | Use |
+|---|---|---|---|
+| `provider` | text | `anthropic` with a key, else `local` | The chat provider. See `docs/CHAT.md`. |
+| `model` | text | `claude-opus-5` | The model the anthropic provider asks. |
+| `api_key` | text | empty | The API key. `ANTHROPIC_API_KEY` fills it when the field is empty. |
+| `effort` | text | `low` | How much the model thinks: `low`, `medium`, `high`, `xhigh`, `max`. |
+| `max_tokens` | number | `8000` | The longest answer. |
+
+Write the key with `lynx chat --set-key <key>`. The environment variables
+`LYNX_CHAT_PROVIDER` and `LYNX_CHAT_MODEL` override the file for one run.
+
 ## Ignore file
 
 Write `.lynxignore` in the folder root to keep files local. One pattern per

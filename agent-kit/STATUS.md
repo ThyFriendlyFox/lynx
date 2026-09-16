@@ -14,7 +14,8 @@ behavior change. The weekly cycle (WEEKLY.md step 5) refreshes it.
 | Right click menu, Linux | 🚧 | The code writes a Nautilus script and a KDE service menu. No run on a real Linux computer yet. |
 | Peer lookup over the public DHT | ✅ | 2 folders with `discovery: dht` and no local network lookup found each other through the public libp2p table in 90 seconds and synced a file. |
 | Sync between 2 different networks | 🚧 | Both peers in the test above sat on 1 network. NAT traversal between 2 networks is roadmap item 2. |
-| Talk to the folder (chat) | ❌ | Roadmap item 1. |
+| Talk to the folder, local provider | ✅ | `verify/chat-gate.sh` green: `lynx chat` names `notes/budget.md` for "how much is the hotel?" and says "No file" for a question the folder cannot answer. |
+| Talk to the folder, Claude provider | 🚧 | The provider compiles, streams and caches the folder description. No run against the real API: this machine holds no API key. A human with a key proves it. |
 | Read the folder with git | ❌ | Roadmap item 4. |
 | Discovery choice (`both`, `mdns`, `dht`) | ✅ | The DHT only run above used the `discovery` field. |
 | Health gate | ✅ | `./verify/verify.sh` green: format, vet, build, 5 cross builds, 4 test packages. |
@@ -23,7 +24,8 @@ States: ✅ done (gated) · 🚧 in progress · ❌ not started · 🧊 frozen/w
 
 ## Current week
 
-- **Shipping:** between cycles. The next item is "Talk to the folder".
+- **Shipping:** "Talk to the folder" on `feat/chat`. The next item is "Connect when the network is hard".
 - **Last release:** none yet. v0.1.0 is ready to tag.
-- **Known red:** none. The untested paths are Windows, Linux and the
-  internet connection; they are marked 🚧 above, not ✅.
+- **Known red:** none. The untested paths are Windows, Linux, the connection
+  between 2 networks and the Claude chat provider; they are marked 🚧 above,
+  not ✅.
