@@ -16,6 +16,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
   Windows and Linux.
 - Peer discovery on the local network with mDNS and on the internet with the
   public libp2p distributed hash table.
+- A `discovery` field in the folder config that selects `both`, `mdns` or
+  `dht`.
 
 ### Changed
 ### Deprecated

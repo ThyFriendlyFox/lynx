@@ -42,6 +42,27 @@ type Config struct {
 	PeerName string `json:"peer_name"`
 	Created  int64  `json:"created"`
 	Port     int    `json:"port"`
+
+	// Discovery selects how this folder finds peers: "both", "mdns" or
+	// "dht". An empty value means "both".
+	Discovery string `json:"discovery,omitempty"`
+}
+
+// Discovery methods.
+const (
+	DiscoverBoth = "both"
+	DiscoverMDNS = "mdns"
+	DiscoverDHT  = "dht"
+)
+
+// UseMDNS reports whether this folder looks for peers on the local network.
+func (c Config) UseMDNS() bool {
+	return c.Discovery == "" || c.Discovery == DiscoverBoth || c.Discovery == DiscoverMDNS
+}
+
+// UseDHT reports whether this folder looks for peers on the internet.
+func (c Config) UseDHT() bool {
+	return c.Discovery == "" || c.Discovery == DiscoverBoth || c.Discovery == DiscoverDHT
 }
 
 // Folder is an open shared folder.

@@ -23,6 +23,7 @@ data. Restart the folder after an edit: `lynx stop` then `lynx start`.
 | `peer_name` | text | the computer name | The name other people see for this computer. |
 | `created` | number | the time of sharing | When the folder was shared, in milliseconds. |
 | `port` | number | `0` | The network port. `0` means a free port. |
+| `discovery` | text | `both` | How the folder finds peers: `both`, `mdns` for the local network only, or `dht` for the internet only. |
 
 ## Other state in `.lynx/`
 

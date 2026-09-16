@@ -62,6 +62,8 @@ in a folder.
 
 ## Later — candidates, not yet specced
 
+- Start at login — a shared folder syncs again after a restart, with no
+  command. Today a person runs `lynx start` again.
 - Folder history — a person restores yesterday's version of a file.
 - Selective sync — a person joins a folder but takes only one subfolder.
 - Chat between peers — a message box next to the folder, not only an AI.

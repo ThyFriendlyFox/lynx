@@ -103,6 +103,16 @@ func (n *Node) Addrs() []string {
 
 // Start joins the network and keeps looking for peers until ctx ends.
 func (n *Node) Start(ctx context.Context) error {
+	if n.fol.Config.UseMDNS() {
+		if err := n.startMDNS(); err != nil {
+			n.log.Warn("start local network discovery", "error", err)
+		}
+	}
+	if !n.fol.Config.UseDHT() {
+		n.log.Info("this folder looks for peers on the local network only")
+		return nil
+	}
+
 	kdht, err := dht.New(n.host, dht.Mode(dht.ModeAuto), dht.BootstrapPeers(dht.GetDefaultBootstrapPeerAddrInfos()...))
 	if err != nil {
 		return fmt.Errorf("start peer lookup: %w", err)
@@ -113,9 +123,6 @@ func (n *Node) Start(ctx context.Context) error {
 	n.dialBootstrap(ctx)
 	if err := kdht.Bootstrap(ctx); err != nil {
 		n.log.Warn("bootstrap the peer lookup", "error", err)
-	}
-	if err := n.startMDNS(); err != nil {
-		n.log.Warn("start local network discovery", "error", err)
 	}
 
 	go n.findLoop(ctx)

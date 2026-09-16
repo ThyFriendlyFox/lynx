@@ -12,9 +12,11 @@ behavior change. The weekly cycle (WEEKLY.md step 5) refreshes it.
 | Right click menu, macOS | ✅ | `lynx menu install`, then `pbs -dump_pboard` lists "Share with Lynx"; running the Quick Action shared a folder and copied the code. |
 | Right click menu, Windows | 🚧 | The code writes the registry keys and cross builds. No run on a real Windows computer yet. |
 | Right click menu, Linux | 🚧 | The code writes a Nautilus script and a KDE service menu. No run on a real Linux computer yet. |
-| Sync over the internet (DHT) | 🚧 | The peer lookup starts and advertises. No run between 2 different networks yet. |
+| Peer lookup over the public DHT | ✅ | 2 folders with `discovery: dht` and no local network lookup found each other through the public libp2p table in 90 seconds and synced a file. |
+| Sync between 2 different networks | 🚧 | Both peers in the test above sat on 1 network. NAT traversal between 2 networks is roadmap item 2. |
 | Talk to the folder (chat) | ❌ | Roadmap item 1. |
 | Read the folder with git | ❌ | Roadmap item 4. |
+| Discovery choice (`both`, `mdns`, `dht`) | ✅ | The DHT only run above used the `discovery` field. |
 | Health gate | ✅ | `./verify/verify.sh` green: format, vet, build, 5 cross builds, 4 test packages. |
 
 States: ✅ done (gated) · 🚧 in progress · ❌ not started · 🧊 frozen/won't do.
