@@ -5,6 +5,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Versioning: [SemVer](
 
 ## [Unreleased]
 ### Added
+- `lynx chat` answers questions about the files in a folder. It runs as a
+  conversation, or answers one question given on the command line.
+- 2 chat providers: `local`, a word search that needs no key, and
+  `anthropic`, which streams an answer from Claude.
+- `lynx chat --set-key <key>` stores an API key outside every shared folder.
 - `lynx share` turns a folder into a shared folder and prints the code to send.
 - `lynx join <code>` joins a folder that a friend shared.
 - Live sync between peers: adds, edits, deletes and renames travel in about 1 second.

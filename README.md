@@ -60,10 +60,37 @@ Finder on macOS, in Explorer on Windows and in Nautilus or Dolphin on Linux.
 
 Remove it again with `lynx menu remove`.
 
+## Ask about the folder
+
+```bash
+cd ~/my-folder
+lynx chat
+```
+
+Ask a question and Lynx answers about the files in that folder. Ask one
+question without the conversation:
+
+```bash
+lynx chat "how much is the hotel in the budget?"
+```
+
+With no API key, answers come from a word search over the same files. For
+full answers, store a key once:
+
+```bash
+lynx chat --set-key sk-ant-...
+```
+
+The key lives in your own config file, never in the shared folder. Lynx sends
+the file list and the text files to the model; it never sends a file that
+`.lynxignore` hides. Read [the chat document](agent-kit/docs/CHAT.md) for what
+the model receives.
+
 ## Other commands
 
 | Command | Use |
 |---|---|
+| `lynx chat` | Ask about the files in this folder. |
 | `lynx status` | Show the peers, the file count and the last event. |
 | `lynx log` | Show what happened in this folder. |
 | `lynx code` | Print the share code again. |
@@ -106,7 +133,6 @@ Read [the architecture](agent-kit/docs/ARCHITECTURE.md) for the full map.
 
 - It does not connect 2 computers that both sit behind a network which blocks
   direct connections. The relay work is roadmap item 2.
-- It does not talk to you about the folder yet. The chat is roadmap item 1.
 - It does not push to git yet. The bridge is roadmap item 4.
 - It does not sync `.git/`, empty folders, symbolic links or files above 2 GB.
 

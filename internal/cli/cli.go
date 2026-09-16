@@ -14,6 +14,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/thyfriendlyfox/lynx/internal/chat"
 	"github.com/thyfriendlyfox/lynx/internal/daemon"
 	"github.com/thyfriendlyfox/lynx/internal/folder"
 	"github.com/thyfriendlyfox/lynx/internal/sharecode"
@@ -28,6 +29,7 @@ const usage = `lynx keeps a folder the same on every computer that holds it.
 Usage:
   lynx share [folder]        Share a folder and print the code to send
   lynx join <code> [folder]  Join a folder that a friend shared
+  lynx chat [question]       Ask about the files in a folder
   lynx status [folder]       Show the state of a folder
   lynx log [folder]          Show what happened in a folder
   lynx code [folder]         Print the share code again
@@ -54,6 +56,8 @@ func Main(args []string) int {
 		err = cmdShare(rest)
 	case "join":
 		err = cmdJoin(rest)
+	case "chat":
+		err = cmdChat(rest)
 	case "status":
 		err = cmdStatus(rest)
 	case "log":
@@ -215,6 +219,72 @@ func cmdRun(args []string) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	return daemon.Run(ctx, fol, log)
+}
+
+func cmdChat(args []string) error {
+	fs := flag.NewFlagSet("chat", flag.ContinueOnError)
+	dir := fs.String("dir", "", "the folder to ask about")
+	provider := fs.String("provider", "", "the chat provider: anthropic or local")
+	model := fs.String("model", "", "the model to ask")
+	setKey := fs.String("set-key", "", "store an API key for the chat and exit")
+	words, err := parseArgs(fs, args)
+	if err != nil {
+		return err
+	}
+
+	if *setKey != "" {
+		cfg := chat.LoadConfig()
+		cfg.APIKey = *setKey
+		cfg.Provider = chat.ProviderAnthropic
+		if err := chat.SaveConfig(cfg); err != nil {
+			return err
+		}
+		path, _ := chat.ConfigPath()
+		fmt.Printf("The key is stored in %s.\n", path)
+		return nil
+	}
+
+	root, err := pickDir(*dir, nil, 0)
+	if err != nil {
+		return err
+	}
+	fol, err := folder.FindUp(root)
+	if err != nil {
+		return err
+	}
+
+	cfg := chat.LoadConfig()
+	if *provider != "" {
+		cfg.Provider = *provider
+	}
+	if *model != "" {
+		cfg.Model = *model
+	}
+	p, err := chat.NewProvider(cfg)
+	if err != nil {
+		return err
+	}
+
+	entries, err := chat.FolderEntries(fol.Root)
+	if err != nil {
+		return err
+	}
+	session := chat.NewSession(p, chat.Describe(fol.Root, fol.Config.Name, entries))
+
+	question := strings.TrimSpace(strings.Join(words, " "))
+	if question != "" {
+		_, err := session.Ask(context.Background(), question, os.Stdout)
+		fmt.Println()
+		return err
+	}
+
+	fmt.Printf("Chat about %s: %d files, provider %s.\n", fol.Config.Name, len(entries), p.Name())
+	if p.Name() == chat.ProviderLocal {
+		fmt.Println("No API key is set, so answers come from a word search.")
+		fmt.Println("Run \"lynx chat --set-key <key>\" for full answers.")
+	}
+	fmt.Println("Type a question. Type \"exit\" to leave.")
+	return session.Loop(context.Background(), os.Stdin, os.Stdout)
 }
 
 func cmdStatus(args []string) error {

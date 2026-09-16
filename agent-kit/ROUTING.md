@@ -23,7 +23,8 @@ already defines.
 | CI is missing or broken, workflows need creating | `CI.md` | Source blocks for `.github/workflows/`. |
 | Understanding the codebase before a change | `docs/ARCHITECTURE.md` | Parts, data flow, boundaries. |
 | Adding/changing any config option | `docs/CONFIGURATION.md` | Every knob lands in its table, same PR. |
-| Touching how peers find each other | `docs/DISCOVERY.md` | The pluggable seam. Includes the new-method contract. |
+| Touching how peers find each other | `docs/DISCOVERY.md` | A pluggable seam. Includes the new-method contract. |
+| Touching the chat or its providers | `docs/CHAT.md` | A pluggable seam. What the model receives, and the new-provider contract. |
 | Judging whether a feature is worth building, or writing roadmap items | `docs/USE-CASES.md` | Every ROADMAP item traces to a use case here. |
 | Writing ANY user-facing text (docs, UI copy, errors, release notes) | `docs/STYLE.md` | One voice, enforced terms table. |
 | Writing YOUR OWN words — commits, PR bodies, reports, devlog entries | `TONE.md` | The agent's voice. Always in effect, like AGENTS.md. |
