@@ -18,6 +18,9 @@ behavior change. The weekly cycle (WEEKLY.md step 5) refreshes it.
 | Talk to the folder, Claude provider | 🚧 | The provider compiles, streams and caches the folder description. No run against the real API: this machine holds no API key. A human with a key proves it. |
 | Read the folder with git | ❌ | Roadmap item 4. |
 | Discovery choice (`both`, `mdns`, `dht`) | ✅ | The DHT only run above used the `discovery` field. |
+| Several shared folders at once | ✅ | 2 folders with 2 different keys, each joined by a second copy: 4 processes ran at once, each pair synced its own file, and no file crossed between the pairs. |
+| Public repository and CI | ✅ | https://github.com/ThyFriendlyFox/lynx — main pushed, CI green, Release workflow published v0.1.0 and v0.2.0. |
+| Published binaries | ✅ | 5 binaries for v0.2.0 with `SHA256SUMS`; every checksum verified and `lynx-v0.2.0-darwin-arm64 version` printed `lynx v0.2.0`. |
 | Health gate | ✅ | `./verify/verify.sh` green: format, vet, build, 5 cross builds, 4 test packages. |
 
 States: ✅ done (gated) · 🚧 in progress · ❌ not started · 🧊 frozen/won't do.
@@ -25,7 +28,10 @@ States: ✅ done (gated) · 🚧 in progress · ❌ not started · 🧊 frozen/w
 ## Current week
 
 - **Shipping:** between cycles. The next item is "Connect when the network is hard".
-- **Last release:** v0.2.0 — 2026-09-16. Tagged locally; the repository has no remote yet.
+- **Last release:** v0.2.0 — 2026-09-16, published at
+  https://github.com/ThyFriendlyFox/lynx/releases/tag/v0.2.0 with 5 binaries
+  and checksums. `go install github.com/thyfriendlyfox/lynx/cmd/lynx@v0.2.0`
+  works.
 - **Known red:** none. The untested paths are Windows, Linux, the connection
   between 2 networks and the Claude chat provider; they are marked 🚧 above,
   not ✅.

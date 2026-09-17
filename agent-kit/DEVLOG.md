@@ -109,3 +109,30 @@ enough. ROADMAP.md records the change.
 
 Evidence: `./verify/verify.sh` green, including the new `verify/chat-gate.sh`
 with 4 cases.
+
+## 2026-09-16 — The repository is public and the releases are real
+
+The human asked for the GitHub repository. I ran the gate, created
+https://github.com/ThyFriendlyFox/lynx as a public repository, and pushed
+main with the 2 tags.
+
+The tags started the Release workflow. It built 5 binaries and published
+v0.1.0 and v0.2.0. I downloaded the v0.2.0 files, checked the 5 checksums and
+ran the macOS binary: it printed `lynx v0.2.0`. A release is not done until
+somebody runs it, so now it is done.
+
+I also tested the module path, because the repository name holds capital
+letters and Go module paths do not. `go install
+github.com/thyfriendlyfox/lynx/cmd/lynx@v0.2.0` works. The line in README.md
+is correct.
+
+The human asked whether Lynx handles several folders. It does. I shared 2
+folders with 2 different keys and joined each one into a second copy. Four
+processes ran at once. Each pair synced its own file. No file crossed between
+the pairs.
+
+Dependabot opened 6 pull requests within a minute of the first push. They
+wait for the next maintenance pass.
+
+Evidence: `./verify/verify.sh` green before the push; Release run 35175598358
+succeeded; `shasum -a 256 -c SHA256SUMS` reported OK for 5 files.
